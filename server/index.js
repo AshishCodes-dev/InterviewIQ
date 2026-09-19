@@ -28,11 +28,16 @@ app.use(cors({
   credentials: true 
 }));
 
-const PORT = process.env.PORT || 6000;
+app.set("trust proxy", 1);
 
+const PORT = process.env.PORT || 8000;
 
 app.use(express.json());
 app.use(cookieParser());
+
+app.get("/", (req, res) => {
+  res.status(200).json({ status: "ok", message: "InterviewIQ Server is live and healthy!" });
+});
 
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
