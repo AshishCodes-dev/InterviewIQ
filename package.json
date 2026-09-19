@@ -1,0 +1,26 @@
+{
+  "name": "interviewiq",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI-Powered Full-Stack Mock Interview & Preparation Platform",
+  "scripts": {
+    "install:all": "npm --prefix server install && npm --prefix client install",
+    "dev:server": "npm --prefix server run dev",
+    "dev:client": "npm --prefix client run dev",
+    "build:client": "npm --prefix client run build",
+    "start:server": "npm --prefix server start"
+  },
+  "keywords": [
+    "ai",
+    "interview-preparation",
+    "mock-interview",
+    "react",
+    "nodejs",
+    "express",
+    "mongodb",
+    "tailwind",
+    "openrouter"
+  ],
+  "author": "Ashish Pratap Singh",
+  "license": "MIT"
+}
