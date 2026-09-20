@@ -42,7 +42,19 @@ const Auth = ({ isModal = false, onSuccess }) => {
       }
     } catch (error) {
       console.error("Google authentication failed:", error);
-      setErrorMsg("Google sign-in was cancelled or failed. Try Demo Guest login!");
+      if (error?.code === "auth/unauthorized-domain") {
+        setErrorMsg("Domain not authorized in Firebase! Please add 'client-puce-five-74.vercel.app' in Firebase Console -> Authentication -> Settings -> Authorized Domains.");
+      } else if (error?.code === "auth/popup-closed-by-user") {
+        setErrorMsg("Google sign-in popup was closed before completing.");
+      } else if (error?.code === "auth/popup-blocked") {
+        setErrorMsg("Popup was blocked by your browser. Please allow popups for this site.");
+      } else if (error?.response?.data?.message) {
+        setErrorMsg(`Backend Error: ${error.response.data.message}`);
+      } else if (error?.message) {
+        setErrorMsg(error.message);
+      } else {
+        setErrorMsg("Google sign-in failed. Try Demo Guest login!");
+      }
       dispatch(setUserData(null));
     } finally {
       setLoadingGoogle(false);
@@ -67,7 +79,7 @@ const Auth = ({ isModal = false, onSuccess }) => {
       }
     } catch (error) {
       console.error("Demo login failed:", error);
-      setErrorMsg("Failed to start demo session. Please try again.");
+      setErrorMsg(error?.response?.data?.message || error?.message || "Failed to start demo session. Please try again.");
     } finally {
       setLoadingDemo(false);
     }

@@ -9,7 +9,7 @@ export const googleAuth = async (req, res) => {
             user = await User.create({ name, email });
         }
 
-        let token = await genToken(user.id);
+        let token = await genToken(user._id);
         const isProduction = process.env.NODE_ENV === "production";
         res.cookie("token", token, {
             httpOnly: true,
